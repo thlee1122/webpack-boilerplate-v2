@@ -1,0 +1,9 @@
+# Eclipse ignores
+.project
+.settings
+babelLib
+
+**/*.DS_Store
+**/*.log
+**/*.css
+/node_modules/
