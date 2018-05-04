@@ -5,6 +5,8 @@ var cheerio = require('cheerio');
 // var url = "https://www.nytimes.com/";
 var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james-comey-fired_us_5aea7082e4b022f71a04e62a";
 
+// window.items = [];
+
 request(url, function(err, response, html) {
   if(!err) {
     var $ = cheerio.load(html);
@@ -22,8 +24,8 @@ request(url, function(err, response, html) {
     // var heading = $(".story-heading").children();
 
     // console.log(items);
+    // window.items.push(allItems);
     console.log(allItems);
     // console.log(heading);
-
   }
 });
