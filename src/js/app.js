@@ -8,8 +8,7 @@ import keenImage from '../assets/keen-v3.png'; // Importing image -> ADDED IN TH
 // var cheerio = require('cheerio');
 // _ = require('underscore');
 
-
-
+//do axios to get the stuffs from /api
 
 
 export default class Hello extends Component {

@@ -44,31 +44,100 @@ request(url, function(err, response, html) {
   }
 });
 
-app.get('/api', function(req, res) {
+// app.get('/api', function(req, res) {
 
-  var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james-comey-fired_us_5aea7082e4b022f71a04e62a";
+//   var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james-comey-fired_us_5aea7082e4b022f71a04e62a";
 
-  let data = '';
+//   let data = '';
 
-  request(url, function(err, response, html) {
-    var $ = cheerio.load(html);
+//   var newItems = {
+//     title: ''
+//   };
 
-    var newItems = {
-      title: ''
-    };
+//   request(url, function(err, response, html) {
+//     var $ = cheerio.load(html);
 
-    // var allItems = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
-    // data = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
+//     // var allItems = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
+//     // data = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
 
-    newItems.title = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
-    data = newItems;
-    // var items = [];
+//     newItems.title = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
+//     data = newItems;
+//     // var items = [];
 
-    // __homeglobals.push(allItems);
-    res.send(JSON.stringify(data));
-  });
+//     // __homeglobals.push(allItems);
+//     res.send(JSON.stringify(data));
+//   });
 
+// });
+
+app.get('/news/:newsName', function(req, res) {
+  // console.log(req.params.newsName);
+  // console.log(typeof req.params.newsName);
+
+  var data = "";
+
+  var techCrunchURL = "https://techcrunch.com/2018/05/04/nsa-triples-metadata-collection-numbers-sucking-up-over-500-million-call-records-in-2017/";
+
+  var techCrunchNewsItems = {
+    bodyOne: '',
+    bodyTwo: ''
+  };
+
+  switch(req.params.newsName) {
+    case 'tech-crunch':
+
+      request(techCrunchURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+        if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+          techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+        } else {
+          techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+          techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+        }
+          
+        data = techCrunchNewsItems;
+
+        res.send(JSON.stringify(data));
+      });
+
+      break;
+
+    case 'business-insider':
+      data = 'business-insider';
+      break;
+    default:
+      data = 'Please type in correct news source';
+      break;
+  }
 });
+
+// app.get('/api/tech-crunch', function(req, res) {
+
+//   var url = "https://techcrunch.com/2018/05/04/nsa-triples-metadata-collection-numbers-sucking-up-over-500-million-call-records-in-2017/";
+
+//   let data = "";
+
+//   var techCrunchNewsItems = {
+//     bodyOne: '',
+//     bodyTwo: ''
+//   };
+
+//   request(url, function(err, response, html) {
+//     var $ = cheerio.load(html);
+
+//     if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+//       techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//     } else {
+//       techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//       techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+//     }
+      
+//     data = techCrunchNewsItems;
+
+//     res.send(JSON.stringify(data));
+//   });
+// });
 
 var server = app.listen(8082, function () {
    var host = server.address().address;
