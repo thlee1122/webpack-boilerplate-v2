@@ -34,7 +34,7 @@ export default class Hello extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/news/tech-crunch`)
+    axios.get(`http://localhost:8082/news/tech-crunch`)
       .then(res => {
         const data = res.data;
         // this.setState({
