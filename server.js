@@ -76,12 +76,44 @@ app.get('/news/:newsName', function(req, res) {
 
   var data = "";
 
-  var techCrunchURL = "https://techcrunch.com/2018/05/04/nsa-triples-metadata-collection-numbers-sucking-up-over-500-million-call-records-in-2017/";
+  const techCrunchURL = "https://techcrunch.com/2018/05/04/nsa-triples-metadata-collection-numbers-sucking-up-over-500-million-call-records-in-2017/";
+
+  const businessInsiderURL = "http://www.businessinsider.com/tesla-elon-musk-is-acting-more-like-a-desperate-man-than-a-visionary-2018-5";
+
+  const wiredURL = "https://www.wired.com/story/chinese-american-elites-lament-a-brewing-trade-war/";
+
+  const techRadarURL = "https://www.techradar.com/news/google-io-2018";
+
+  const bloombergURL = "https://www.bloomberg.com/news/articles/2018-05-02/tesla-projects-end-to-cash-burning-era-as-model-3-gains-traction";
+
+  const telegraphURL = "https://www.telegraph.co.uk/science/2018/05/06/17-british-sperm-donors-have-fathered-500-children-figures-show/";
 
   var techCrunchNewsItems = {
     bodyOne: '',
     bodyTwo: ''
   };
+
+  var BINewsContent = {};
+
+  var wiredItems = {
+    bodyOne: '',
+    bodyTwo: ''
+  };
+
+  var techRadarItems = {
+    bodyOne: '',
+    bodyTwo: ''
+  };
+
+  var bloombergItems = {
+    bodyOne: '',
+    bodyTwo: ''
+  };
+
+  var telegraphItems = {
+    bodyOne: '',
+    bodyTwo: ''
+  }
 
   switch(req.params.newsName) {
     case 'tech-crunch':
@@ -104,8 +136,100 @@ app.get('/news/:newsName', function(req, res) {
       break;
 
     case 'business-insider':
-      data = 'business-insider';
+
+      request(businessInsiderURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+        // BINewsItems.body = $('.post-content').children('div').children('ul').children('li').text();
+
+        $('.post-content').children('div').children('ul').children('li').each(function(i, elem) {
+          BINewsContent[i] = $(this).text();
+        });
+
+        data = BINewsContent;
+
+        res.send(JSON.stringify(data));
+      });
+
       break;
+
+    case 'wired':
+
+      request(wiredURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+        if($('.article-body-component').children('div').children('p').eq(0).text().split(' ').length > 50) {
+          wiredItems.bodyOne = $('.article-body-component').children('div').children('p').eq(0).text();
+        } else {
+          wiredItems.bodyOne = $('.article-body-component').children('div').children('p').eq(0).text();
+          wiredItems.bodyTwo = $('.article-body-component').children('div').children('p').eq(1).text();
+        }
+
+        data = wiredItems;
+
+        res.send(JSON.stringify(data));
+      });
+
+      break;
+
+    case 'tech-radar':
+
+      request(techRadarURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+
+        if($('.content-wrapper').children('#article-body').children('p').eq(0).text().split(' ').length > 50) {
+          techRadarItems.bodyOne = $('.content-wrapper').children('#article-body').children('p').eq(0).text();
+        } else {
+          techRadarItems.bodyOne = $('.content-wrapper').children('#article-body').children('p').eq(0).text();
+          techRadarItems.bodyTwo = $('.content-wrapper').children('#article-body').children('p').eq(1).text();
+        }
+
+        data = techRadarItems;
+
+        res.send(JSON.stringify(data));
+      });
+
+      break;
+
+    case 'bloomberg':
+
+      request(bloombergURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+        if($('.main-column-v2').children('.body-columns').children('.middle-column').children('.body-copy-v2').children('p').eq(0).text().split(' ').length > 50) {
+          bloombergItems.bodyOne = $('.main-column-v2').children('.body-columns').children('.middle-column').children('.body-copy-v2').children('p').eq(0).text();
+        } else {
+          bloombergItems.bodyOne = $('.main-column-v2').children('.body-columns').children('.middle-column').children('.body-copy-v2').children('p').eq(0).text();
+          bloombergItems.bodyTwo = $('.main-column-v2').children('.body-columns').children('.middle-column').children('.body-copy-v2').children('p').eq(1).text();
+        }
+        
+        data = bloombergItems;
+
+        res.send(JSON.stringify(data));
+      });
+
+      break;
+
+    case 'telegraph':
+
+      request(telegraphURL, function(err, response, html) {
+        var $ = cheerio.load(html);
+
+        if($('.articleBodyText').children('.article-body-text').children('.component-content').children('p').eq(0).text().split(' ').length > 50) {
+          telegraphItems.bodyOne = $('.articleBodyText').children('.article-body-text').children('.component-content').children('p').eq(0).text();
+        } else {
+          telegraphItems.bodyOne = $('.articleBodyText').children('.article-body-text').children('.component-content').children('p').eq(0).text();
+          telegraphItems.bodyTwo = $('.articleBodyText').children('.article-body-text').children('.component-content').children('p').eq(1).text();
+        }
+
+        data = telegraphItems;
+
+        res.send(JSON.stringify(data));
+      });
+
+      break;
+
     default:
       data = 'Please type in correct news source';
       break;

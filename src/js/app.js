@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
+import axios from 'axios';
+
 import '../css/style.css';
 
 import keenImage from '../assets/keen-v3.png'; // Importing image -> ADDED IN THIS STEP
@@ -17,6 +19,31 @@ export default class Hello extends Component {
 
 // window.items = [];
 // let __homeglobals = [];
+
+  constructor() {
+    super();
+    // this.textFields = {};
+    // this.dropDown = {};
+    // this.newErrors = {...this.state.errors};
+    // this.formInfo = {
+    //   customfields: [],
+    //   radioButtonValue:[]
+    // };
+
+    this.techCrunchNewsDate = '';
+  }
+
+  componentDidMount() {
+    axios.get(`/news/tech-crunch`)
+      .then(res => {
+        const data = res.data;
+        // this.setState({
+        //   techCrunchNewsDate: data
+        // });
+
+        this.techCrunchNewsDate = data;
+      });
+  }
 
 // componentDidMount() {
 //   this.scrapWebsite();
@@ -58,6 +85,10 @@ export default class Hello extends Component {
   render() {
     // console.log(window.items);
     // console.log(__homeglobals);
+
+    console.log(this.techCrunchNewsDate);
+
+
     return (
       <div>
         Hello from react
