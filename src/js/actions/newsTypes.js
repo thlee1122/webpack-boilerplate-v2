@@ -1,0 +1,3 @@
+export const GET_NEWS_API = "GET_NEWS_API";
+export const GET_NEWS_API_SUCCESS = "GET_NEWS_API_SUCCESS";
+export const GET_NEWS_API_ERROR = "GET_NEWS_API_ERROR";

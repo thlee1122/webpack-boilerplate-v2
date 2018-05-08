@@ -1,101 +1,51 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { JssProvider } from 'react-jss';
+import thunk from 'redux-thunk';
+import ReduxPromise from 'redux-promise';
+import rootReducer from './reducers';
 
-import axios from 'axios';
+import App from './components/index';
 
-import '../css/style.css';
+import configureStore from './store/configureStore';
 
-import keenImage from '../assets/keen-v3.png'; // Importing image -> ADDED IN THIS STEP
-// var request = require('request');
-// var cheerio = require('cheerio');
-// _ = require('underscore');
+const initialState = {};
 
-//do axios to get the stuffs from /api
+const store = configureStore(initialState);
 
+// const history = syncHistoryWithStore(browserHistory, store);
 
-export default class Hello extends Component {
-// var url = "https://www.reddit.com/top";
-// var url = "https://www.nytimes.com/";
+// const createStoreWithMiddleware = applyMiddleware(thunk, ReduxPromise)(createStore);
 
-// window.items = [];
-// let __homeglobals = [];
+// render(
+//   <Provider store={createStoreWithMiddleware(rootReducer)}>
+//     <App />
+//   </Provider>, 
+//   document.getElementById('app')
+// );
 
-  constructor() {
-    super();
-    // this.textFields = {};
-    // this.dropDown = {};
-    // this.newErrors = {...this.state.errors};
-    // this.formInfo = {
-    //   customfields: [],
-    //   radioButtonValue:[]
-    // };
+/* Redux 'Provider' component only allows 1 child. this is a way around this */
+// const App = ({children}) => children;
 
-    this.techCrunchNewsDate = '';
-  }
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('app')
+);
 
-  componentDidMount() {
-    axios.get(`http://localhost:8082/news/tech-crunch`)
-      .then(res => {
-        const data = res.data;
-        // this.setState({
-        //   techCrunchNewsDate: data
-        // });
-
-        this.techCrunchNewsDate = data;
-      });
-  }
-
-// componentDidMount() {
-//   this.scrapWebsite();
-// };
-
-// scrapWebsite() {
-//   var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james-comey-fired_us_5aea7082e4b022f71a04e62a";
-  
-//   request(url, function(err, response, html) {
-    
-//     if(!err) {
-//       var $ = cheerio.load(html);
-
-//       // var allItems = $("#shell").children();
-      
-//       var allItems = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
-
-//       var items = [];
-
-//       // allItems.each(function(index) {
-//       //   items.push($("#shell").children());
-//       // });
-
-//       // var heading = $(".story-heading").children();
-
-//       // console.log(items);
-//       // window.items.push(allItems);
-//       __homeglobals.push(allItems);
-      
-
-//       console.log(__homeglobals);
-      
-//       // console.log(allItems);
-//       // console.log(heading);
-//     }
-//   });
-// };
-
-  render() {
-    // console.log(window.items);
-    // console.log(__homeglobals);
-
-    console.log(this.techCrunchNewsDate);
-
-
-    return (
-      <div>
-        Hello from react
-        {/* <img src={ keenImage } alt='Commander Keen' /> */}
-      </div>
-    );
-  }
-}
-
-render(<Hello />, document.getElementById('app'));
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <App>
+//       <UserPermissions />
+//       <JssProvider jss={jss}>
+//         <Router history={history} routes={routes} />
+//       </JssProvider>
+//     </App>
+//   </Provider>, document.getElementById('app-root')
+// );
