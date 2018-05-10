@@ -287,7 +287,3 @@ var server = app.listen(8082, function () {
 });
 
 
-// 1. express
-// 2. app.get('/api') -> do line 13 to line 46 in that route
-// 3. spit out in json format
-
