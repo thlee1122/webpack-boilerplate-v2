@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "dev": "webpack-dev-server"
+    "build": "webpack --mode development",
+    "dev": "webpack-dev-server --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -27,8 +27,15 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "http-proxy-middleware": "^0.18.0",
+    "jsonp": "^0.2.1",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
   }
 }

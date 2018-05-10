@@ -2,6 +2,10 @@ var request = require('request');
 var cheerio = require('cheerio');
 var express = require('express');
 var app = express();
+var cors = require('cors');
+var proxy = require('http-proxy-middleware');
+
+
 
 // var url = "https://www.reddit.com/top";
 // var url = "https://www.nytimes.com/";
@@ -9,6 +13,18 @@ var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james
 
 // window.items = [];
 let __homeglobals = [];
+
+// app.use(cors());
+// app.set("jsonp callback", true);
+
+/*
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "developer.gartner.com:9090");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});*/
+
+app.use('/api', proxy({target: 'https://newsapi.org/v2'}));
 
 
 request(url, function(err, response, html) {

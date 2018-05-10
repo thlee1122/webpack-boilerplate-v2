@@ -33,9 +33,13 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-        ],
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-1']
+        }
+        // use: [
+        //   'babel-loader',
+        // ],
       },
       // CSS loader for CSS files
       // Files will get handled by css loader and then passed to the extract text plugin
