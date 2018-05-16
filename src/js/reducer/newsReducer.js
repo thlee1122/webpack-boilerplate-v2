@@ -1,7 +1,8 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  newNews: []
+  newNews: [],
+  fetchedNewsApiOrg: []
 };
 
 const getNewsAPIReducer = (state = initialState, action) => {
@@ -16,10 +17,20 @@ const getNewsAPIReducer = (state = initialState, action) => {
     	debugger;
       return { ...state, error: action.data };
 
+    case types.FETCH_NEWS_API_ORG_SUCCESS:
+      debugger;
+      return { ...state, fetchedNewsApiOrg: action.data };
+
+    case types.FETCH_NEWS_API_ORG_ERROR:
+      debugger;
+      return { ...state, error: action.data };
+
     default: {
       return state;
     };
   };
 };
+
+
 
 export default getNewsAPIReducer;

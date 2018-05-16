@@ -22,10 +22,33 @@ export const getNewsApi = () => {
 	    // headers:{
 	    //     'Access-Control-Allow-Origin':'*'
 	    // },
-        endpoint: `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`,
+        endpoint: `http://localhost:8082/news/tech-crunch`,
         actionTypes: {
           success: types.GET_NEWS_API_SUCCESS,
           error: types.GET_NEWS_API_ERROR
+        }
+      }
+    });
+  }
+}
+
+export const fetchNewsApiOrg = (newsSourceName) => {
+  debugger;
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'API_REQUEST',
+      options: {
+        method: 'GET',
+        service: 'news',
+     //    mode: 'cors',
+      // headers:{
+      //     'Access-Control-Allow-Origin':'*'
+      // },
+        // endpoint: `http://localhost:8082/news/api/tech-crunch`,
+        endpoint: `http://localhost:8082/news/api/${newsSourceName}`,
+        actionTypes: {
+          success: types.FETCH_NEWS_API_ORG_SUCCESS,
+          error: types.FETCH_NEWS_API_ORG_ERROR
         }
       }
     });

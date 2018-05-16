@@ -14,15 +14,16 @@ var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james
 // window.items = [];
 let __homeglobals = [];
 
-// app.use(cors());
-// app.set("jsonp callback", true);
+// app.use(cors({credentials:true, origin: 'http://localhost:8080'}));
+app.use(cors({credentials:true, origin: 'http://localhost:8081'}));
+app.set("jsonp callback", true);
 
-/*
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "developer.gartner.com:9090");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});*/
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:8080/");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.use('/api', proxy({target: 'https://newsapi.org/v2'}));
 
@@ -85,6 +86,85 @@ request(url, function(err, response, html) {
 //   });
 
 // });
+
+
+//fetch news by category
+app.get('/news/api/:newsName', function(req, res) {
+  const API_KEY = '6c78608600354f199f3f13ddb0d1e71a';
+
+  let data = '';
+
+  // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+  // const techCrunchURL = `https://newsapi.org/v2/everything?sources=techcrunch&apiKey=${API_KEY}`
+  const techCrunchURL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`
+  // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&page=30&pageSize=30&apiKey=${API_KEY}`;
+
+  const businessInsiderURL = `https://newsapi.org/v2/top-headlines?sources=business-insider&apiKey=${API_KEY}`
+
+  let fetchedTechCrunchNews = {
+    totalResults: '',
+    articles: ''
+  };
+
+  switch(req.params.newsName) {
+    case 'tech-crunch':
+      request(techCrunchURL, function(err, response, html) {
+        // var $ = cheerio.load(html);
+
+        // if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+        //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+        // } else {
+        //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+        //   techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+        // }
+        
+        let formattedData = JSON.parse(response.body);
+
+        // console.log(formattedData);
+        // console.log(formattedData.status);
+        console.log(formattedData.totalResults);
+        console.log(formattedData.articles);
+        
+        // fetchedTechCrunchNews.totalResults = response.body.totalResults;
+        // fetchedTechCrunchNews.articles = response.body.articles;
+
+        // console.log(fetchedTechCrunchNews);
+        // console.log(response.body);
+        // console.log(typeof response.body);
+        // console.log(JSON.parse(response.body));
+        // console.log(JSON.parse(response.body).status);
+        // console.log(response.body.status);
+
+        data = response.body;
+        // data = fetchedTechCrunchNews;
+        // data = techCrunchNewsItems;
+        // console.log(response);
+        // console.log(response.body);
+        // console.log(response.body.status);
+        // console.log(JSON.stringify(response));
+
+        // res.send(JSON.stringify(data));
+        res.setHeader('Content-Type', 'application/json');
+        res.send(data);
+        // res.end(data);
+      });
+
+    case 'business insider':
+      request(businessInsiderURL, function(err, response, html) {
+        let formattedData = JSON.parse(response.body);
+
+        data = response.body;
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(data);
+        // res.end();
+      });
+
+    default:
+      data = 'Please type in correct news source';
+      break;
+  }
+})
 
 app.get('/news/:newsName', function(req, res) {
   // console.log(req.params.newsName);
