@@ -144,43 +144,44 @@ class mainIndex extends Component {
                 }
 
                 return (
-                    <a
-                    href={articlesItem.url}
-                    style={{cursor:'pointer'}}
-                    >
-                  <Card key={index}>
-                      
-                      <CardMedia
-                        image={ articlesItem.urlToImage }
-                        title="testing"
-                        style={{width: '300px', height: '300px'}}
-                      />
+                  <a
+                  href={articlesItem.url}
+                  style={{cursor:'pointer'}}
+                  key={index}
+                  >
+                    <Card key={index}>
+                        
+                        <CardMedia
+                          image={ articlesItem.urlToImage }
+                          title="testing"
+                          style={{width: '300px', height: '300px'}}
+                        />
 
-                      <CardContent>
-                        <Typography component="h1">
-                          { articlesItem.title }
-                        </Typography>
+                        <CardContent>
+                          <Typography component="h1">
+                            { articlesItem.title }
+                          </Typography>
 
-                        { articlesItem.description !== null && articlesItem.description.split(' ').length > 25 ? 
-                            <Typography component="p">
-                              { articlesItem.description }
-                            </Typography>
-                          
-                          :
-                          
-                          <React.Fragment>
-                            <Typography component="p">
-                              {newNews.bodyOne}
-                            </Typography>
+                          { articlesItem.description !== null && articlesItem.description.split(' ').length > 25 ? 
+                              <Typography component="p">
+                                { articlesItem.description }
+                              </Typography>
+                            
+                            :
+                            
+                            <React.Fragment>
+                              <Typography component="p">
+                                {newNews.bodyOne}
+                              </Typography>
 
-                            <Typography component="p">
-                              {newNews.bodyTwo}
-                            </Typography>
-                          </React.Fragment>
-                        }
-                      </CardContent>
-                  </Card>
-                    </a>
+                              <Typography component="p">
+                                {newNews.bodyTwo}
+                              </Typography>
+                            </React.Fragment>
+                          }
+                        </CardContent>
+                    </Card>
+                  </a>
                 );
               })
             }

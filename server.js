@@ -14,8 +14,9 @@ var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james
 // window.items = [];
 let __homeglobals = [];
 
-// app.use(cors({credentials:true, origin: 'http://localhost:8080'}));
-app.use(cors({credentials:true, origin: 'http://localhost:8081'}));
+app.use(cors({credentials:true, origin: 'http://localhost:8080'}));
+// app.use(cors({credentials:true, origin: 'http://localhost:8081'}));
+// app.use(cors({credentials:true, origin: 'http://localhost:8082'}));
 app.set("jsonp callback", true);
 
 
@@ -106,6 +107,8 @@ app.get('/news/api/:newsName', function(req, res) {
     articles: ''
   };
 
+  let articleUrlArray = [];
+
   switch(req.params.newsName) {
     case 'tech-crunch':
       request(techCrunchURL, function(err, response, html) {
@@ -122,8 +125,21 @@ app.get('/news/api/:newsName', function(req, res) {
 
         // console.log(formattedData);
         // console.log(formattedData.status);
-        console.log(formattedData.totalResults);
-        console.log(formattedData.articles);
+        // console.log(formattedData.totalResults);
+
+        // newsArticles = formattedData.articles;
+
+
+
+        // console.log(formattedData.articles);
+        // console.log(typeof formattedData.articles);
+        // console.log(newsArticles[0].url);
+
+        for(let i = 0; i < formattedData.articles.length; i++) {
+          articleUrlArray.push(formattedData.articles[i].url);
+        }
+
+        console.log(articleUrlArray);
         
         // fetchedTechCrunchNews.totalResults = response.body.totalResults;
         // fetchedTechCrunchNews.articles = response.body.articles;
@@ -148,6 +164,7 @@ app.get('/news/api/:newsName', function(req, res) {
         res.send(data);
         // res.end(data);
       });
+      break;
 
     case 'business insider':
       request(businessInsiderURL, function(err, response, html) {
@@ -159,6 +176,7 @@ app.get('/news/api/:newsName', function(req, res) {
         res.send(data);
         // res.end();
       });
+      break;
 
     default:
       data = 'Please type in correct news source';
