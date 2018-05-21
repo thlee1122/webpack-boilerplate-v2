@@ -56,7 +56,7 @@ request(url, function(err, response, html) {
 
     // console.log(__homeglobals);
     
-    console.log(newItems);
+    // console.log(newItems);
     // console.log(allItems);
     // console.log(heading);
   }
@@ -89,100 +89,368 @@ request(url, function(err, response, html) {
 // });
 
 
+let articleUrlArray = [];
+// let articleUrlArray = ['https://techcrunch.com/2018/05/19/shared-housing-startups-are-taking-off/',];
+// let articleUrlArray = [ 'https://techcrunch.com/2018/05/19/shared-housing-startups-are-taking-off/',
+//   'https://techcrunch.com/2018/05/19/shared-housing-startups-are-taking-off/',
+//   'https://techcrunch.com/2018/05/19/my-data-request-lists-guides-to-get-data-about-you/',
+//   'https://techcrunch.com/2018/05/19/siempos-new-app-will-break-your-smartphone-addiction/',
+//   'https://techcrunch.com/2018/05/19/la-belle-vie-wants-to-compete-with-amazon-prime-now-in-paris/',
+//   'https://techcrunch.com/2018/05/19/apple-started-paying-15-billion-european-tax-fine/',
+//   'https://techcrunch.com/2018/05/19/original-content-dear-white-people/',
+//   'https://techcrunch.com/2018/05/19/meet-the-judges-for-the-tc-startup-battlefield-europe-at-vivatech/',
+//   'https://techcrunch.com/2018/05/18/nasas-newest-planet-hunting-satellite-takes-a-stellar-first-test-image/',
+//   'https://techcrunch.com/video-article/turning-your-toys-into-robots-with-circuit-cubes/',
+//   'https://techcrunch.com/2018/05/18/does-googles-duplex-violate-two-party-consent-laws/' ];
+
 //fetch news by category
-app.get('/news/api/:newsName', function(req, res) {
-  const API_KEY = '6c78608600354f199f3f13ddb0d1e71a';
+// app.get('/news/api/:newsName', function(req, res) {
+//   const API_KEY = '6c78608600354f199f3f13ddb0d1e71a';
 
-  let data = '';
+//   let data = '';
 
-  // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
-  // const techCrunchURL = `https://newsapi.org/v2/everything?sources=techcrunch&apiKey=${API_KEY}`
-  const techCrunchURL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`
-  // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&page=30&pageSize=30&apiKey=${API_KEY}`;
+//   // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+//   // const techCrunchURL = `https://newsapi.org/v2/everything?sources=techcrunch&apiKey=${API_KEY}`
+//   const techCrunchURL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`
+//   // const techCrunchURL = `https://newsapi.org/v2/top-headlines?country=us&category=business&page=30&pageSize=30&apiKey=${API_KEY}`;
 
-  const businessInsiderURL = `https://newsapi.org/v2/top-headlines?sources=business-insider&apiKey=${API_KEY}`
+//   const businessInsiderURL = `https://newsapi.org/v2/top-headlines?sources=business-insider&apiKey=${API_KEY}`
 
-  let fetchedTechCrunchNews = {
-    totalResults: '',
-    articles: ''
-  };
+//   let fetchedTechCrunchNews = {
+//     totalResults: '',
+//     articles: ''
+//   };
 
-  let articleUrlArray = [];
 
-  switch(req.params.newsName) {
-    case 'tech-crunch':
-      request(techCrunchURL, function(err, response, html) {
-        // var $ = cheerio.load(html);
+//   let techCrunchObj = {
+//     articlesInfo: ''
+//   };
 
-        // if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
-        //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
-        // } else {
-        //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
-        //   techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
-        // }
+//   switch(req.params.newsName) {
+//     case 'tech-crunch':
+//       request(techCrunchURL, function(err, response, html) {
+//         // var $ = cheerio.load(html);
+
+//         // if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+//         //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//         // } else {
+//         //   techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//         //   techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+//         // }
         
-        let formattedData = JSON.parse(response.body);
+//         let formattedData = JSON.parse(response.body);
 
-        // console.log(formattedData);
-        // console.log(formattedData.status);
-        // console.log(formattedData.totalResults);
+//         // console.log(formattedData);
+//         // console.log(formattedData.status);
+//         // console.log(formattedData.totalResults);
 
-        // newsArticles = formattedData.articles;
+//         // newsArticles = formattedData.articles;
 
 
 
-        // console.log(formattedData.articles);
-        // console.log(typeof formattedData.articles);
-        // console.log(newsArticles[0].url);
+//         // console.log(formattedData.articles);
+//         // console.log(typeof formattedData.articles);
+//         // console.log(newsArticles[0].url);
 
-        for(let i = 0; i < formattedData.articles.length; i++) {
-          articleUrlArray.push(formattedData.articles[i].url);
+//         for(let i = 0; i < formattedData.articles.length; i++) {
+//           articleUrlArray.push(formattedData.articles[i].url);
+//         }
+
+//         console.log(articleUrlArray);
+        
+//         // fetchedTechCrunchNews.totalResults = response.body.totalResults;
+//         // fetchedTechCrunchNews.articles = response.body.articles;
+
+//         // console.log(fetchedTechCrunchNews);
+//         // console.log(response.body);
+//         // console.log(typeof response.body);
+//         // console.log(JSON.parse(response.body));
+//         // console.log(JSON.parse(response.body).status);
+//         // console.log(response.body.status);
+
+//         data = response.body;
+//         // data = fetchedTechCrunchNews;
+//         // data = techCrunchNewsItems;
+//         // console.log(response);
+//         // console.log(response.body);
+//         // console.log(response.body.status);
+//         // console.log(JSON.stringify(response));
+
+//         // res.send(JSON.stringify(data));
+//         res.setHeader('Content-Type', 'application/json');
+//         res.send(data);
+//         // res.end(data);
+//       });
+//       break;
+
+//     case 'business insider':
+//       request(businessInsiderURL, function(err, response, html) {
+//         let formattedData = JSON.parse(response.body);
+
+//         data = response.body;
+
+//         res.setHeader('Content-Type', 'application/json');
+//         res.send(data);
+//         // res.end();
+//       });
+//       break;
+
+//     default:
+//       data = 'Please type in correct news source';
+//       break;
+//   }
+// })
+
+function getNewsNames(newsName, callback) {
+    const API_KEY = '6c78608600354f199f3f13ddb0d1e71a';
+    let data = '';
+    const techCrunchURL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`
+    const wiredURL = `https://newsapi.org/v2/top-headlines?sources=wired&apiKey=${API_KEY}`
+
+    switch (newsName) {
+        case 'tech-crunch':
+            request(techCrunchURL, function (err, response, html) {
+
+                if(articleUrlArray.length !== 0) {
+                  articleUrlArray = [];
+                }
+
+                let formattedData = JSON.parse(response.body);
+
+                for (let i = 0; i < formattedData.articles.length; i++) {
+                    articleUrlArray.push(formattedData.articles[i].url);
+                }
+
+                data = response.body;
+                callback(null, data);
+            });
+
+            break;
+
+        case 'wired':
+          request(wiredURL, function (err, response, html) {
+
+                if(articleUrlArray.length !== 0) {
+                  articleUrlArray = [];
+                }
+
+                let formattedData = JSON.parse(response.body);
+
+                for (let i = 0; i < formattedData.articles.length; i++) {
+                    articleUrlArray.push(formattedData.articles[i].url);
+                }
+
+                data = response.body;
+                callback(null, data);
+            });
+
+            break;
+
+        default:
+            data = 'Please type in correct news source';
+            callback('Error', data);
+            break;
+    }
+}
+
+app.get('/news/api/:newsName', function (req, res) {
+
+    getNewsNames(req.params.newsName, (err, data) => {
+        if (!err) {
+            res.setHeader('Content-Type', 'application/json');
         }
 
-        console.log(articleUrlArray);
-        
-        // fetchedTechCrunchNews.totalResults = response.body.totalResults;
-        // fetchedTechCrunchNews.articles = response.body.articles;
-
-        // console.log(fetchedTechCrunchNews);
-        // console.log(response.body);
-        // console.log(typeof response.body);
-        // console.log(JSON.parse(response.body));
-        // console.log(JSON.parse(response.body).status);
-        // console.log(response.body.status);
-
-        data = response.body;
-        // data = fetchedTechCrunchNews;
-        // data = techCrunchNewsItems;
-        // console.log(response);
-        // console.log(response.body);
-        // console.log(response.body.status);
-        // console.log(JSON.stringify(response));
-
-        // res.send(JSON.stringify(data));
-        res.setHeader('Content-Type', 'application/json');
-        res.send(data);
-        // res.end(data);
-      });
-      break;
-
-    case 'business insider':
-      request(businessInsiderURL, function(err, response, html) {
-        let formattedData = JSON.parse(response.body);
-
-        data = response.body;
-
-        res.setHeader('Content-Type', 'application/json');
-        res.send(data);
-        // res.end();
-      });
-      break;
-
-    default:
-      data = 'Please type in correct news source';
-      break;
-  }
+        return res.send(data);
+    })
 })
+
+
+app.get('/news/news-desc/:newsName', (req, res) => {
+    const checkBody = res => (err, response, html) => {
+        const $ = cheerio.load(html);
+        let articleContent = '';
+        let bodyOne = '';
+        let bodyTwo = '';
+        const isExtensive = bodyOne.split(' ').length > 50
+
+        switch(req.params.newsName) {
+          case 'tech-crunch':
+
+            articleContent = $('.article-content').children('p')
+            bodyOne = articleContent.eq(0).text()
+            bodyTwo = articleContent.eq(1).text()
+
+            res(isExtensive ? { bodyOne } : { bodyOne, bodyTwo })
+            
+            break;
+
+          case 'wired':
+            // const $ = cheerio.load(html);
+            articleContent = $('.article-body-component').children('div').children('p');
+            bodyOne = articleContent.eq(0).text();
+            bodyTwo = articleContent.eq(1).text();
+            // const isExtensive = bodyOne.split(' ').length > 50;
+            res(isExtensive ? { bodyOne } : { bodyOne, bodyTwo })
+
+            break;
+
+          default:
+            res('wrong news source name');
+            break;
+        }
+
+    }
+
+    const getArticle = article => new Promise(res => request(article, checkBody(res)));
+
+    getNewsNames(req.params.newsName, (err, data) => {
+        // by now, the articleUrlArray array will be filled
+        Promise.all(articleUrlArray.map(getArticle)).then(data => res.send(JSON.stringify(data)))
+    })
+})
+
+
+// app.get('/news/news-desc', (req, res) => {
+//     const checkBody = res => (err, response, html) => {
+//         const $ = cheerio.load(html);
+//         const articleContent = $('.article-content').children('p')
+//         const bodyOne = articleContent.eq(0).text()
+//         const bodyTwo = articleContent.eq(1).text()
+//         const isExtensive = bodyOne.split(' ').length > 50
+//         res(isExtensive ? { bodyOne } : { bodyOne, bodyTwo })
+//     }
+
+//     const getArticle = article => new Promise(res => request(article, checkBody(res)))
+
+//     Promise.all(articleUrlArray.map(getArticle)).then(data => res.send(JSON.stringify(data)))
+// })
+
+// const checkBody = (err, response, html) => {
+//     const $ = cheerio.load(html);
+//     const articleContent = $('.article-content').children('p')
+//     const bodyOne = articleContent.eq(0).text()
+//     const bodyTwo = articleContent.eq(1).text()
+//     const isExtensive = bodyOne.split(' ').length > 50
+//     // console.log(bodyOne);
+//     // console.log(bodyTwo);
+
+//     return isExtensive ? { bodyOne } : { bodyOne, bodyTwo }
+
+// }
+
+// const getArticle = article => request(article, checkBody)
+
+// app.get('/news/news-desc', (req, res) => {
+
+//     Promise.all(articleUrlArray.map(article => checkBody(article))).then(data => res.send(JSON.stringify(data)));
+
+//     // Promise.all(articleUrlArray.map(getArticle)).then(data => res.send(JSON.stringify(data)))
+// })
+
+// for(var i = 0; i < articleUrlArray.length-1; i++) {
+//   app.get('/news/news-desc', function(req, res) {
+
+//     var data = '';
+
+//     // var techCrunchNewsItems = {
+//     //   bodyOne: '',
+//     //   bodyTwo: ''
+//     // };
+
+//     var techCrunchNewsItems = [];
+
+//     request( articleUrlArray[i], function(err, response, html) {
+//       var $ = cheerio.load(html);
+
+//       if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+
+//         techCrunchNewsItems.push({
+//           bodyOne: $('.article-content').children('p').eq(0).text()
+//         });
+//         // techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//       } else {
+//         // techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//         // techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+
+//         techCrunchNewsItems.push({
+//           bodyOne: $('.article-content').children('p').eq(0).text(),
+//           bodyTwo: $('.article-content').children('p').eq(1).text()
+//         });
+//       }
+        
+//       data = techCrunchNewsItems;
+
+//       res.send(JSON.stringify(data));
+//     });
+//   })
+// }
+
+  // app.get('/news/news-desc', function(req, res) {
+
+  //   var data = '';
+
+  //   // var techCrunchNewsItems = {
+  //   //   bodyOne: '',
+  //   //   bodyTwo: ''
+  //   // };
+
+  //   var techCrunchNewsItems = [];
+
+  // for(var i = 0; i < articleUrlArray.length-1; i++) {
+  //   request( articleUrlArray[i], function(err, response, html) {
+  //     var $ = cheerio.load(html);
+
+  //     if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+
+  //       techCrunchNewsItems.push({
+  //         bodyOne: $('.article-content').children('p').eq(0).text()
+  //       });
+  //       // techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+  //     } else {
+  //       // techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+  //       // techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+
+  //       techCrunchNewsItems.push({
+  //         bodyOne: $('.article-content').children('p').eq(0).text(),
+  //         bodyTwo: $('.article-content').children('p').eq(1).text()
+  //       });
+  //     }
+        
+  //     data = techCrunchNewsItems;
+
+  //   });
+  // }
+  //     res.send(JSON.stringify(data));
+
+  // })
+
+
+// app.get('/news/news-desc', function(req, res) {
+
+//   var data = '';
+
+//   const techCrunchURL = "https://techcrunch.com/2018/05/04/nsa-triples-metadata-collection-numbers-sucking-up-over-500-million-call-records-in-2017/";
+
+//   var techCrunchNewsItems = {
+//     bodyOne: '',
+//     bodyTwo: ''
+//   };
+
+//   request( techCrunchURL, function(err, response, html) {
+//     var $ = cheerio.load(html);
+
+//     if($('.article-content').children('p').eq(0).text().split(' ').length > 50) {
+//       techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//     } else {
+//       techCrunchNewsItems.bodyOne = $('.article-content').children('p').eq(0).text();
+//       techCrunchNewsItems.bodyTwo = $('.article-content').children('p').eq(1).text();
+//     }
+      
+//     data = techCrunchNewsItems;
+
+//     res.send(JSON.stringify(data));
+//   });
+// })
 
 app.get('/news/:newsName', function(req, res) {
   // console.log(req.params.newsName);

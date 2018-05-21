@@ -32,6 +32,25 @@ export const getNewsApi = () => {
   }
 }
 
+export const getNewsDesc = (newsSourceName) => {
+  debugger;
+
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'API_REQUEST',
+      options: {
+        method: 'GET',
+        service: 'news',
+        endpoint: `http://localhost:8082/news/news-desc/${newsSourceName}`,
+        actionTypes: {
+          success: types.FETCH_NEWS_DESC_SUCCESS,
+          error: types.FETCH_NEWS_DESC_SUCCESS
+        }
+      }
+    });
+  }
+}
+
 export const fetchNewsApiOrg = (newsSourceName) => {
   debugger;
   return (dispatch, getState) => {

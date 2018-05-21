@@ -125,11 +125,13 @@ class mainIndex extends Component {
   // }
 
   displayCards() {
-    const { fetchedNewsApiOrg, newNews } = this.props.news;
+    const { fetchedNewsApiOrg, newNews, fetchedNewsDesc } = this.props.news;
 
     console.log(fetchedNewsApiOrg);
     // console.log(newNews);
     console.log(newNews);
+
+    console.log(this.props);
 
     if( fetchedNewsApiOrg.articles) {
       if(fetchedNewsApiOrg.articles.length > 1) {
@@ -227,6 +229,16 @@ class mainIndex extends Component {
 
   handleSearchClick = () => {
     this.props.fetchNewsApiOrg(this.newsSourceName);
+
+    // setTimeout(function() {
+    //   this.props.getNewsDesc();
+    // }, 4000);
+
+    this.props.getNewsDesc(this.newsSourceName);
+
+    // this.props.fetchNewsApiOrg(this.newsSourceName).then( () => {
+    //   this.props.getNewsDesc();
+    // })
   }
 
   render() {
