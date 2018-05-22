@@ -41,9 +41,9 @@ function buildURL(options) {
   let destinationHost = '';
 
   switch(options.service) {
-    case 'feed':
-      URL = 'http://developer.gartner.com:8081';
-      break;
+    // case 'feed':
+    //   URL = 'http://developer.gartner.com:8081';
+    //   break;
 
     case 'news':
       destinationHost = getGlobal("wwww_s");
@@ -51,11 +51,11 @@ function buildURL(options) {
       return URL;
       break;
 
-    case 'researchBoard':
-      destinationHost = getGlobal("www_s");
-      URL = process.env.EXPLORE_JSON_SERVER + options.endpoint;
-      return URL;
-      break;
+    // case 'researchBoard':
+    //   destinationHost = getGlobal("www_s");
+    //   URL = process.env.EXPLORE_JSON_SERVER + options.endpoint;
+    //   return URL;
+    //   break;
 
     case 'search':
       URL = process.env.SEARCH_JSON_SERVER + options.endpoint;

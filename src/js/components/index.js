@@ -4,6 +4,8 @@ import {connect}                            from 'react-redux';
 import {bindActionCreators}                 from 'redux';
 import axios                                from 'axios';
 import * as newsActions                     from '../actions/newsActions';
+import * as stockActions                    from '../actions/stockActions';
+
 import Card                                 from '@material-ui/core/Card';
 import CardActions                          from '@material-ui/core/CardActions';
 import CardContent                          from '@material-ui/core/CardContent';
@@ -24,12 +26,13 @@ class mainIndex extends Component {
 
   componentDidMount() {
     this.props.getNewsApi();
+    this.props.getStockInfo();
   }
 
   displayCards() {
     const { fetchedNewsApiOrg, newNews, fetchedNewsDesc } = this.props.news;
 
-    console.log(this.props);
+    // console.log(this.props);
 
     if( fetchedNewsApiOrg.articles) {
       if(fetchedNewsApiOrg.articles.length > 1) {
@@ -112,6 +115,8 @@ class mainIndex extends Component {
 
   render() {
 
+    console.log(this.props);
+
     return (
       <div>
         <div className="search-section">
@@ -139,7 +144,8 @@ class mainIndex extends Component {
 
 function mapStateToProps(state) {
   return {
-    news: state.news
+    news: state.news,
+    stockInfo: state.stockInfo
   };
 }
 
@@ -147,6 +153,7 @@ export default connect(
   mapStateToProps,
   {
     ...newsActions,
+    ...stockActions
   }
 )(mainIndex);
 
