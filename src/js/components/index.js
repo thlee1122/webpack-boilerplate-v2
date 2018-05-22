@@ -14,122 +14,20 @@ import TextField                            from '@material-ui/core/TextField';
 import ButtonBase                            from '@material-ui/core/ButtonBase';
 import '../../css/style.css';
 
-// var request = require('request');
-// var cheerio = require('cheerio');
-// _ = require('underscore');
-
-//do axios to get the stuffs from /api
-
-
 class mainIndex extends Component {
-// var url = "https://www.reddit.com/top";
-// var url = "https://www.nytimes.com/";
-
-// window.items = [];
-// let __homeglobals = [];
 
   constructor() {
     super();
-    // this.textFields = {};
-    // this.dropDown = {};
-    // this.newErrors = {...this.state.errors};
-    // this.formInfo = {
-    //   customfields: [],
-    //   radioButtonValue:[]
-    // };
-
     this.techCrunchNewsDate = '';
     this.newsSourceName = 'tech-crunch';
   }
 
-  // componentDidMount() {
-  //   axios.get(`http://localhost:8082/news/tech-crunch`)
-  //     .then(res => {
-  //       const data = res.data;
-  //       // this.setState({
-  //       //   techCrunchNewsDate: data
-  //       // });
-
-  //       this.techCrunchNewsDate = data;
-  //     });
-  // }
-
   componentDidMount() {
     this.props.getNewsApi();
-    // this.props.fetchNewsApiOrg();
-    // this.props.fetchNewsApiOrg(this.newsSourceName);
   }
-
-// componentDidMount() {
-//   this.scrapWebsite();
-// };
-
-// scrapWebsite() {
-//   var url = "https://www.huffingtonpost.com/entry/rudy-giuliani-donald-trump-james-comey-fired_us_5aea7082e4b022f71a04e62a";
-  
-//   request(url, function(err, response, html) {
-    
-//     if(!err) {
-//       var $ = cheerio.load(html);
-
-//       // var allItems = $("#shell").children();
-      
-//       var allItems = $(".desktop").children('.main').children('#main').children('.entry').children('.entry__header').children('.js-headline').children('.headline__title').text();
-
-//       var items = [];
-
-//       // allItems.each(function(index) {
-//       //   items.push($("#shell").children());
-//       // });
-
-//       // var heading = $(".story-heading").children();
-
-//       // console.log(items);
-//       // window.items.push(allItems);
-//       __homeglobals.push(allItems);
-      
-
-//       console.log(__homeglobals);
-      
-//       // console.log(allItems);
-//       // console.log(heading);
-//     }
-//   });
-// };
-
-  // displayTopHeadlines(articles) {
-  //   if(articles) {
-  //     return (
-  //       <div>
-  //         <ul className="articles-ul">
-  //           {Object.keys(articles).map((key, index) => {
-  //             const articlesItem = articles[key];
-  //             const articlesItemDate = articlesItem.publishedAt;
-
-  //             return (
-  //               <div className="single-article-box" key={index} style={{border: '1px solid black'}}>
-  //                 <a href={articlesItem.url} style={{textDecoration:'none', color:"black"}}>
-  //                   <p>{this.displayDate(articlesItemDate)}</p>
-  //                   <h5>{articlesItem.title}</h5>
-  //                   <img src={articlesItem.urlToImage} style={{width:'200px', height:'200px'}}/>
-  //                   <p>{articlesItem.description}</p>
-  //                   {articlesItem.author ? <p>by {articlesItem.author}</p> : <p>by Newspaper Company</p>}
-  //                 </a>
-  //               </div>
-  //             )
-  //           })}
-  //         </ul>
-  //       </div>
-  //     )
-  //   }
-  // }
 
   displayCards() {
     const { fetchedNewsApiOrg, newNews, fetchedNewsDesc } = this.props.news;
-
-    console.log(fetchedNewsApiOrg);
-    // console.log(newNews);
-    console.log(newNews);
 
     console.log(this.props);
 
@@ -141,21 +39,15 @@ class mainIndex extends Component {
                 const articlesItem = fetchedNewsApiOrg.articles[key];
                 const articlesItemDate = articlesItem.publishedAt;
 
-                if(articlesItem.description !== null) {
-                  console.log(articlesItem.description.split(' ').length);
-                }
-
                 return (
                   <a
-                  href={articlesItem.url}
-                  style={{cursor:'pointer'}}
-                  key={index}
+                    href={articlesItem.url}
+                    style={{cursor:'pointer'}}
+                    key={index}
                   >
                     <Card key={index}>
-                        
                         <CardMedia
                           image={ articlesItem.urlToImage }
-                          title="testing"
                           style={{width: '300px', height: '300px'}}
                         />
 
@@ -163,24 +55,40 @@ class mainIndex extends Component {
                           <Typography component="h1">
                             { articlesItem.title }
                           </Typography>
+                          
+                          { articlesItem.description !== null && articlesItem.description.split(' ').length > 25 ?
+                            <Typography component="p">
+                              { articlesItem.description }
+                            </Typography>
 
-                          { articlesItem.description !== null && articlesItem.description.split(' ').length > 25 ? 
-                              <Typography component="p">
-                                { articlesItem.description }
-                              </Typography>
-                            
-                            :
-                            
+                            : fetchedNewsDesc[index] !== undefined ?
+
                             <React.Fragment>
                               <Typography component="p">
-                                {newNews.bodyOne}
+                                { fetchedNewsDesc[index].bodyOne }
                               </Typography>
 
                               <Typography component="p">
-                                {newNews.bodyTwo}
+                                { fetchedNewsDesc[index].bodyTwo }
                               </Typography>
                             </React.Fragment>
+
+                            :
+
+                            <React.Fragment></React.Fragment>
                           }
+
+                          <Typography component="p">
+                            Source: { articlesItem.source.name }
+                          </Typography>
+
+                          <Typography component="p">
+                            Author: { articlesItem.author }
+                          </Typography>
+
+                          <Typography component="p">
+                            Published at: { articlesItem.publishedAt.slice(0, 10) }
+                          </Typography>
                         </CardContent>
                     </Card>
                   </a>
@@ -191,67 +99,18 @@ class mainIndex extends Component {
         );
       }
     }
-
-    // if( fetchedNewsApiOrg.articles) {
-    //   if(fetchedNewsApiOrg.articles.length > 1) {
-    //     return (
-    //       <React.Fragment>
-    //         <Card>
-    //           <CardMedia
-    //             image={ fetchedNewsApiOrg.articles[1].urlToImage }
-    //             title="testing"
-    //             style={{width: '300px', height: '300px'}}
-    //           />
-
-    //           <CardContent>
-    //             <Typography component="h2">
-    //               { fetchedNewsApiOrg.articles[1].title }
-    //             </Typography>
-
-    //             <Typography component="p">
-    //               { fetchedNewsApiOrg.articles[1].description }
-    //             </Typography>
-    //           </CardContent>
-    //         </Card>
-    //       </React.Fragment>
-    //     );
-    //   }
-    // } else {
-    //   console.log('false');
-    // } 
   }
 
   searchNewSource = (event) => {
-    // console.log(event.target.value);
     this.newsSourceName = event.target.value;
-    console.log(this.newsSourceName);
   }
 
   handleSearchClick = () => {
     this.props.fetchNewsApiOrg(this.newsSourceName);
-
-    // setTimeout(function() {
-    //   this.props.getNewsDesc();
-    // }, 4000);
-
     this.props.getNewsDesc(this.newsSourceName);
-
-    // this.props.fetchNewsApiOrg(this.newsSourceName).then( () => {
-    //   this.props.getNewsDesc();
-    // })
   }
 
   render() {
-    // console.log(window.items);
-    // console.log(__homeglobals);
-
-    // console.log(this.techCrunchNewsDate);
-
-    // const { fetchedNewsApiOrg, newNews } = this.props.news;
-    // console.log(this.props);
-    // console.log(fetchedNewsApiOrg);
-    // console.log(newNews);
-
 
     return (
       <div>
@@ -261,7 +120,6 @@ class mainIndex extends Component {
             label="Search News"
             placeholder="Type news source name"
             className="news-source-textfield"
-            // fullWidth
             onChange={this.searchNewSource.bind(this)}
           />
 
@@ -272,7 +130,6 @@ class mainIndex extends Component {
             Search
           </Button>
         </div>
-
 
         {this.displayCards()}
       </div>
@@ -286,21 +143,10 @@ function mapStateToProps(state) {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     newsActions: bindActionCreators(newsActions, dispatch)
-//   };
-// }
-
 export default connect(
   mapStateToProps,
   {
     ...newsActions,
   }
-  // mapDispatchToProps
 )(mainIndex);
-
-//create componentDidMount() and call the action
-
-
 
