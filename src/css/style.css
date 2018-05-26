@@ -5,3 +5,19 @@
 .news-source-textfield {
 	width: 300px;
 }
+
+.percentage-green {
+	color: green;
+};
+
+.percentage-red {
+	color: red;
+}
+
+.extended-percentage-red {
+	color: red;
+}
+
+.extended-percentage-green {
+	color: green;
+};

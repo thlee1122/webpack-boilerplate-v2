@@ -264,6 +264,29 @@ app.get('/news/api/:newsName', function (req, res) {
     })
 })
 
+app.get('/stock/:stockTicker', function (req, res) {
+  const stock_info_api_url = `https://api.iextrading.com/1.0/stock/${req.params.stockTicker}/batch?types=quote,news,chart&range=1m&last=10`;
+
+  request(stock_info_api_url, function (err, response, html) {
+    data = response.body;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+    // res.end();
+  });
+});
+
+app.get('/stock/financial/:stockTicker', function (req, res) {
+  const stock_financial_api_url = `https://api.iextrading.com/1.0/stock/${req.params.stockTicker}/financials`;
+
+  request(stock_financial_api_url, function (err, response, html) {
+    data = response.body;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  });
+});
+
 
 app.get('/news/news-desc/:newsName', (req, res) => {
     const checkBody = res => (err, response, html) => {

@@ -2,6 +2,7 @@ import * as types from '../actions/stockActionTypes';
 
 const initialState = {
   stockInfo: [],
+  stockFinancialInfo: []
 };
 
 const getStockInfoReducer = (state = initialState, action) => {
@@ -14,6 +15,12 @@ const getStockInfoReducer = (state = initialState, action) => {
       
     case types.GET_STOCK_INFO_ERROR:
     	debugger;
+      return { ...state, error: action.data };
+
+    case types.GET_STOCK_FINANCIAL_SUCCESS:
+      return { ...state, stockFinancialInfo: action.data };
+
+    case types.GET_STOCK_FINANCIAL_ERROR:
       return { ...state, error: action.data };
 
     default: {
